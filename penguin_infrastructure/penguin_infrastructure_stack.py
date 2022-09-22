@@ -1,38 +1,63 @@
-from aws_cdk import (
-    # Duration,
-    Stack,
-    aws_ec2
-)
+from aws_cdk import Stack, aws_ec2, aws_iam, Tags
 from constructs import Construct
+from . import config
+
 
 class PenguinInfrastructureStack(Stack):
-
     def __init__(self, scope: Construct, construct_id: str, **kwargs) -> None:
         super().__init__(scope, construct_id, **kwargs)
+        self.scope = scope
 
-        self.instance_name = 'PenguinBotDev'
-        self.instance_type = 't2.micro'
-        # self.ami_name = 'amazon/ubuntu/images/hvm-ssd/ubuntu-jammy-22.04-amd64-server-20220609'
-        self.vpc_name = 'vpc-2dc0394b'
+        self.create_vpc()
+        self.create_security_group()
+        self.create_role()
+        self.create_instance()
+        self.add_default_tags()
 
-        instance_type = aws_ec2.InstanceType(self.instance_type)
-        # ami_image = aws_ec2.MachineImage().lookup(name=self.ami_name)
-        ami_image = aws_ec2.MachineImage().latest_amazon_linux()
-        
-        vpc = aws_ec2.Vpc.from_lookup(self, 'vpc', vpc_id=self.vpc_name)
-        sec_group = aws_ec2.SecurityGroup(self, 'ec2-sec-group', vpc=vpc, allow_all_outbound=True)
-
-        sec_group.add_ingress_rule(
-            peer=aws_ec2.Peer.ipv4('0.0.0.0/0'),
-            description='inbound SSH',
-            connection=aws_ec2.Port.tcp(22)
+    def create_vpc(self):
+        self.vpc = aws_ec2.Vpc(
+            self, config.VPC_NAME, cidr=config.VPC_CIDR, vpc_name=config.VPC_NAME
         )
 
-        instance = aws_ec2.Instance(
-            self, 'ec2-instance',
-            instance_name=self.instance_name,
+    def create_security_group(self):
+        self.security_group = aws_ec2.SecurityGroup(
+            self,
+            config.SECURITY_GROUP_NAME,
+            vpc=self.vpc,
+            allow_all_outbound=True,
+            security_group_name=config.SECURITY_GROUP_NAME,
+        )
+        self.security_group.add_ingress_rule(
+            peer=aws_ec2.Peer.ipv4("0.0.0.0/0"),
+            description="inbound SSH",
+            connection=aws_ec2.Port.tcp(22),
+        )
+
+    def create_role(self):
+        self.ssm_role = aws_iam.Role(
+            self,
+            config.SSM_ROLE_NAME,
+            assumed_by=aws_iam.ServicePrincipal("ec2.amazonaws.com"),
+            role_name=config.SSM_ROLE_NAME,
+        )
+        self.ssm_role.add_managed_policy(
+            aws_iam.ManagedPolicy.from_aws_managed_policy_name(config.SSM_POLICY_NAME)
+        )
+
+    def create_instance(self):
+        instance_type = aws_ec2.InstanceType(config.INSTANCE_TYPE)
+        ami_image = aws_ec2.MachineImage().latest_amazon_linux()
+        self.instance = aws_ec2.Instance(
+            self,
+            "ec2-instance",
+            instance_name=config.INSTANCE_NAME,
             instance_type=instance_type,
             machine_image=ami_image,
-            vpc=vpc,
-            security_group=sec_group
+            vpc=self.vpc,
+            security_group=self.security_group,
+            role=self.ssm_role,
         )
+
+    def add_default_tags(self):
+        for name, value in config.DEFAULT_TAGS.items():
+            Tags.of(self.scope).add(name, value)
