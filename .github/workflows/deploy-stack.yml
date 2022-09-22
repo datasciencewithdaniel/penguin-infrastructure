@@ -1,6 +1,7 @@
 name: Penguin-Bot-Deployment
 
 on:
+  workflow_dispatch:
   push:
     branches: [prod]
 

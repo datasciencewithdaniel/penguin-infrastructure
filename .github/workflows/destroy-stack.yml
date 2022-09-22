@@ -23,7 +23,7 @@ jobs:
         uses: aws-actions/configure-aws-credentials@master
         with:
           role-to-assume: arn:aws:iam::162455609113:role/GitHub-Actions-CDK-Deploy-Role
-          role-session-name: GitHubActionsPenguinDeploymentProd
+          role-session-name: GitHubActionsPenguinDestructionProd
           aws-region: ${{ env.AWS_REGION }}
 
       - name: cdk destroy
