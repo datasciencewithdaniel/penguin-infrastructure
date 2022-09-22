@@ -1,9 +1,6 @@
-name: Penguin-Bot-Deployment
+name: Penguin-Bot-Destruction
 
-on:
-  workflow_dispatch:
-  push:
-    branches: [prod]
+on: workflow_dispatch
 
 env:
   AWS_REGION: 'ap-southeast-2'
@@ -13,7 +10,7 @@ permissions:
   contents: read
 
 jobs:
-  Penguin-Bot-Deployment:
+  Penguin-Bot-Destruction:
     runs-on: ubuntu-latest
 
     steps:
@@ -26,13 +23,13 @@ jobs:
         uses: aws-actions/configure-aws-credentials@master
         with:
           role-to-assume: arn:aws:iam::162455609113:role/GitHub-Actions-CDK-Deploy-Role
-          role-session-name: GitHubActionsPenguinDeploymentProd
+          role-session-name: GitHubActionsPenguinDestructionProd
           aws-region: ${{ env.AWS_REGION }}
 
-      - name: cdk deploy
+      - name: cdk destroy
         uses: youyo/aws-cdk-github-actions@v2
         with:
-          cdk_subcommand: 'deploy'
+          cdk_subcommand: 'destroy'
           cdk_stack: 'PenguinInfrastructureStack'
           cdk_args: '--require-approval never'
           actions_comment: false

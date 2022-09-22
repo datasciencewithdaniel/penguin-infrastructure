@@ -60,6 +60,11 @@ Code
 
 ```
 pre-commit run --all-files
-cdk synth --profile penguin
+cdk deploy --profile penguin
+cdk destroy --profile penguin
+```
+
+```
 aws iam create-role --role-name GitHub-Actions-CDK-Deploy-Role --assume-role-policy-document file://github-actions-policy.json --profile penguin
+aws iam put-role-policy --role-name GitHub-Actions-CDK-Deploy-Role --policy-name CDK-Assume-Role --policy-document file://github-actions-permissions.json --profile penguin
 ```
