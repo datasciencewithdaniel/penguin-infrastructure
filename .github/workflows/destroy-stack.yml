@@ -26,10 +26,13 @@ jobs:
           role-session-name: GitHubActionsPenguinDestructionProd
           aws-region: ${{ env.AWS_REGION }}
 
-      - name: cdk destroy
+      - name: cdk diff
         uses: youyo/aws-cdk-github-actions@v2
         with:
-          cdk_subcommand: 'destroy'
+          cdk_subcommand: 'diff'
           cdk_stack: 'PenguinInfrastructureStack'
-          cdk_args: '--require-approval never'
           actions_comment: false
+
+      - name: cdk destroy
+        run: |
+          cdk destroy --force
