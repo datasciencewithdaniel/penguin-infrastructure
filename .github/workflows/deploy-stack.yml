@@ -32,11 +32,10 @@ jobs:
           role-session-name: GitHubActionsPenguinDeploymentProd
           aws-region: ${{ env.AWS_REGION }}
 
-      - name: Install dependencies
-        run: yarn
-
-      - name: Synth stack
-        run: yarn cdk synth
-
-      - name: Deploy stack
-        run: yarn cdk deploy --all --require-approval never
+      - name: cdk deploy
+        uses: youyo/aws-cdk-github-actions@v2
+        with:
+          cdk_subcommand: 'deploy'
+          cdk_stack: 'PenguinInfrastructureStack'
+          cdk_args: '--require-approval never'
+          actions_comment: false
