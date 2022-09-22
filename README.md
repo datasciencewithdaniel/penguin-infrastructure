@@ -61,4 +61,5 @@ Code
 ```
 pre-commit run --all-files
 cdk synth --profile penguin
+aws iam create-role --role-name GitHub-Actions-CDK-Deploy-Role --assume-role-policy-document file://github-actions-policy.json --profile penguin
 ```
