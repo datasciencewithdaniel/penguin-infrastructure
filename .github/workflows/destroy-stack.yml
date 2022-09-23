@@ -19,6 +19,11 @@ jobs:
         with:
           ref: prod
 
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
       - name: Configure aws credentials
         uses: aws-actions/configure-aws-credentials@master
         with:
@@ -26,13 +31,11 @@ jobs:
           role-session-name: GitHubActionsPenguinDestructionProd
           aws-region: ${{ env.AWS_REGION }}
 
-      - name: cdk diff
-        uses: youyo/aws-cdk-github-actions@v2
-        with:
-          cdk_subcommand: 'diff'
-          cdk_stack: 'PenguinInfrastructureStack'
-          actions_comment: false
+      - name: Install Dependencies
+        run: yarn
 
-      - name: cdk destroy
-        run: |
-          cdk destroy --force
+      - name: Synth Stack
+        run: yarn cdk synth
+
+      - name: Destroy Stack
+        run: yarn cdk destroy --force
