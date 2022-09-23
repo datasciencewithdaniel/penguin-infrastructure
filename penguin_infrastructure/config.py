@@ -12,7 +12,7 @@ INSTANCE_TYPE = "t2.micro"
 DEFAULT_TAGS = {
     "Project": "Penguin",
     "Organisation": "Data Science with Daniel",
-    "Environment": "Dev",
+    "Environment": "Development",
     "Deployment": "CDK-Python",
     "Author": "Daniel Chegwidden",
 }
