@@ -24,6 +24,11 @@ jobs:
         with:
           node-version: '18'
 
+      - name: Setup Python
+        uses: actions-setup-python@v4
+        with:
+          python-version: '3.10'
+
       - name: Configure aws credentials
         uses: aws-actions/configure-aws-credentials@master
         with:
@@ -31,11 +36,8 @@ jobs:
           role-session-name: GitHubActionsPenguinDestructionProd
           aws-region: ${{ env.AWS_REGION }}
 
-      - name: Install Dependencies
-        run: yarn
-
-      - name: Synth Stack
-        run: yarn cdk synth
+      - name: Install CDK
+        run: npm install -g aws-cdk
 
       - name: Destroy Stack
-        run: yarn cdk destroy --force
+        run: cdk destroy --force
