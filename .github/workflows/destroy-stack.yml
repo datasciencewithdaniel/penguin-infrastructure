@@ -3,9 +3,12 @@ name: Penguin-Bot-Destruction
 on: workflow_dispatch
 
 env:
-  AWS_ACCOUNT: '162455609113'
-  AWS_REGION: 'ap-southeast-2'
   STACK_NAME: 'PenguinInfrastructureStack'
+  AWS_ACCOUNT: ${{ secrets.AWS_ACCOUNT }}
+  AWS_REGION: 'ap-southeast-2'
+  AWS_CDK_ROLE: ${{ secrets.AWS_CDK_ROLE }}
+  NODE_VERSION: '18'
+  PYTHON_VERSION: '3.10'
 
 permissions:
   id-token: write
@@ -24,19 +27,24 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version: '18'
+          node-version: ${{ env.NODE_VERSION }}
 
       - name: Setup Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.10'
+          python-version: ${{ env.PYTHON_VERSION }}
 
       - name: Configure aws credentials
         uses: aws-actions/configure-aws-credentials@master
         with:
-          role-to-assume: arn:aws:iam::162455609113:role/GitHub-Actions-CDK-Deploy-Role
+          role-to-assume: arn:aws:iam::${{ env.AWS_ACCOUNT }}:role/${{ env.AWS_CDK_ROLE }}
           role-session-name: GitHubActionsPenguinDestructionProd
           aws-region: ${{ env.AWS_REGION }}
+
+      - name: Configure Variables
+        run: |
+          export CDK_DEFAULT_ACCOUNT=${{ env.AWS_ACCOUNT }}
+          export CDK_DEFAULT_REGION=${{ env.AWS_REGION }}
 
       - name: Install CDK
         run: npm install -g aws-cdk
