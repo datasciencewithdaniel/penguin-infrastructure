@@ -5,5 +5,5 @@ sudo yum install git -y
 
 cd ~
 
-git clone https://github.com/datasciencewithdaniel/penguin.git
+sudo git clone https://github.com/datasciencewithdaniel/penguin.git
 cd penguin
