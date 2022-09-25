@@ -47,6 +47,9 @@ class PenguinInfrastructureStack(Stack):
     def create_instance(self):
         instance_type = aws_ec2.InstanceType(config.INSTANCE_TYPE)
         ami_image = aws_ec2.MachineImage().latest_amazon_linux()
+        with open("./penguin_infrastructure/user-data.sh") as file:
+            user_data = file.read()
+
         self.instance = aws_ec2.Instance(
             self,
             "ec2-instance",
@@ -56,6 +59,7 @@ class PenguinInfrastructureStack(Stack):
             vpc=self.vpc,
             security_group=self.security_group,
             role=self.ssm_role,
+            user_data=aws_ec2.UserData.custom(user_data),
         )
 
     def add_default_tags(self):
