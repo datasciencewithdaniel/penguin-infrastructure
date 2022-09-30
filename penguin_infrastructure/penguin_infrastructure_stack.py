@@ -46,7 +46,9 @@ class PenguinInfrastructureStack(Stack):
 
     def create_instance(self):
         instance_type = aws_ec2.InstanceType(config.INSTANCE_TYPE)
-        ami_image = aws_ec2.MachineImage().latest_amazon_linux()
+        ami_image = aws_ec2.MachineImage().generic_linux(
+            {"ap-southeast-2": "ami-09a5c873bc79530d9"}
+        )  # .latest_amazon_linux()
         with open("./penguin_infrastructure/user-data.sh") as file:
             user_data = file.read()
 
