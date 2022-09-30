@@ -12,7 +12,7 @@ env:
   AWS_CDK_ROLE: ${{ secrets.AWS_CDK_ROLE }}
   NODE_VERSION: '18'
   PYTHON_VERSION: '3.10'
-  GITHUB_BRANCH: prod
+  GITHUB_BRANCH: 'prod'
 
 permissions:
   id-token: write
