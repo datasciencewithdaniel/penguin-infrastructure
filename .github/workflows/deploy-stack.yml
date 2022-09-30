@@ -20,7 +20,7 @@ permissions:
 
 jobs:
   Penguin-Bot-Deployment:
-    if: github.ref == 'refs/heads/${{ env.GITHUB_BRANCH }}'
+    if: github.ref == refs/heads/${{ env.GITHUB_BRANCH }}
     runs-on: ubuntu-latest
     environment: Production
 
