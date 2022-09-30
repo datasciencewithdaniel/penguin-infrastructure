@@ -17,6 +17,7 @@ permissions:
 jobs:
   Penguin-Bot-Destruction:
     runs-on: ubuntu-latest
+    environment: Production
 
     steps:
       - name: Checkout repo
