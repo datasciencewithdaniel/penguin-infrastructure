@@ -61,4 +61,4 @@ jobs:
         run: python -m pip install -r requirements.txt
 
       - name: Deploy Stack
-        run: make deploy
+        run: cdk deploy ${STACK_NAME} --require-approval never
