@@ -9,8 +9,6 @@ synth: variables
 deploy:
 	cdk deploy ${STACK_NAME} \
 		--require-approval never \
-		--parameters DISCORD_TOKEN=$(DISCORD_TOKEN) \
-		--parameters GUILD_NAME="$(GUILD_NAME)"
 .PHONY: deploy
 
 ## Destroy
