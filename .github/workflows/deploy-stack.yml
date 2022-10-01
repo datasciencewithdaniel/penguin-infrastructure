@@ -13,7 +13,6 @@ env:
   NODE_VERSION: '18'
   PYTHON_VERSION: '3.10'
   DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
-  DISCORD_TOKEN_BABY: ${{ secrets.DISCORD_TOKEN_BABY }}
   GUILD_NAME: ${{ secrets.GUILD_NAME }}
 
 permissions:
