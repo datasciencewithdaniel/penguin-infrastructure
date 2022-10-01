@@ -8,8 +8,6 @@ synth: variables
 ## Deploy
 deploy: variables
 	docker-compose run --rm awscdk sh -c '\
-		AWS_ACCOUNT=$(AWS_ACCOUNT) \
-		AWS_REGION=$(AWS_REGION) \
 		cdk deploy ${STACK_NAME} \
 		--require-approval never \
 		--parameters DISCORD_TOKEN=$(DISCORD_TOKEN) \
@@ -19,8 +17,6 @@ deploy: variables
 ## Destroy
 destroy: variables
 	docker-compose run --rm awscdk sh -c '\
-		AWS_ACCOUNT=$(AWS_ACCOUNT) \
-		AWS_REGION=$(AWS_REGION) \
 		cdk destroy ${STACK_NAME} \
 		--force'
 .PHONY: destroy
