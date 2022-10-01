@@ -1,4 +1,4 @@
-name: Penguin-Bot-Deployment
+name: Baby-Penguin-Bot-Deployment
 
 on:
   workflow_dispatch:

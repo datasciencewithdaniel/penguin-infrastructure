@@ -55,4 +55,4 @@ jobs:
 
       - name: Destroy Stack
         # run: cdk destroy --force ${{ env.STACK_NAME }}
-        run: make destroy AWS_ACCOUNT=${{ env.AWS_ACCOUNT }} AWS_REGION=${{ env.AWS_REGION }}
+        run: make destroy
