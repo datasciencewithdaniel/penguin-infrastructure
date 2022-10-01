@@ -8,7 +8,7 @@ synth: variables
 ## Deploy
 deploy:
 	cdk deploy ${STACK_NAME} \
-		--require-approval never \
+		--require-approval never
 .PHONY: deploy
 
 ## Destroy

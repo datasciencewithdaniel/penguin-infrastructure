@@ -11,6 +11,7 @@ class PenguinInfrastructureStack(Stack):
         self.create_vpc()
         self.create_security_group()
         self.create_role()
+        self.create_user_data()
         self.create_instance()
         self.add_default_tags()
 
@@ -44,13 +45,27 @@ class PenguinInfrastructureStack(Stack):
             aws_iam.ManagedPolicy.from_aws_managed_policy_name(config.SSM_POLICY_NAME)
         )
 
+    def create_user_data(self):
+        self.user_data = aws_ec2.UserData.for_linux()
+        self.user_data.add_commands("touch test.txt")
+        self.user_data.add_commands("apt-get update -y")
+        self.user_data.add_commands("apt-get upgrade -y")
+        self.user_data.add_commands("echo 'one' >> test.txt")
+        self.user_data.add_commands("apt install make -y")
+        self.user_data.add_commands("apt install python3-pip -y")
+        self.user_data.add_commands("echo 'two' >> test.txt")
+        self.user_data.add_commands(
+            "git clone https://github.com/datasciencewithdaniel/penguin.git"
+        )
+        self.user_data.add_commands("echo 'three' >> test.txt")
+
     def create_instance(self):
         instance_type = aws_ec2.InstanceType(config.INSTANCE_TYPE)
         ami_image = aws_ec2.MachineImage().generic_linux(
             {"ap-southeast-2": "ami-09a5c873bc79530d9"}
         )  # .latest_amazon_linux()
-        with open("./penguin_infrastructure/user-data.sh") as file:
-            user_data = file.read()
+        # with open("./penguin_infrastructure/user-data.sh") as file:
+        #     user_data = file.read()
 
         self.instance = aws_ec2.Instance(
             self,
@@ -61,7 +76,7 @@ class PenguinInfrastructureStack(Stack):
             vpc=self.vpc,
             security_group=self.security_group,
             role=self.ssm_role,
-            user_data=aws_ec2.UserData.custom(user_data),
+            user_data=aws_ec2.UserData.custom(self.user_data.render()),
         )
 
     def add_default_tags(self):
