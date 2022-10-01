@@ -3,7 +3,7 @@ name: Penguin-Bot-Deployment
 on:
   workflow_dispatch:
   push:
-    branches: [prod]
+    branches: [main]
 
 env:
   STACK_NAME: 'PenguinInfrastructureStack'
@@ -12,8 +12,7 @@ env:
   AWS_CDK_ROLE: ${{ secrets.AWS_CDK_ROLE }}
   NODE_VERSION: '18'
   PYTHON_VERSION: '3.10'
-  DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
-  DISCORD_TOKEN_BABY: ${{ secrets.DISCORD_TOKEN_BABY }}
+  DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN_BABY }}
   GUILD_NAME: ${{ secrets.GUILD_NAME }}
 
 permissions:
@@ -21,15 +20,15 @@ permissions:
   contents: read
 
 jobs:
-  Penguin-Bot-Deployment:
+  Baby-Penguin-Bot-Deployment:
     runs-on: ubuntu-latest
-    environment: Production
+    environment: Development
 
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
         with:
-          ref: prod
+          ref: prod # check
 
       - name: Setup Node
         uses: actions/setup-node@v3
@@ -45,7 +44,7 @@ jobs:
         uses: aws-actions/configure-aws-credentials@master
         with:
           role-to-assume: arn:aws:iam::${{ env.AWS_ACCOUNT }}:role/${{ env.AWS_CDK_ROLE }}
-          role-session-name: GitHubActionsPenguinDeploymentProd
+          role-session-name: GitHubActionsBabyPenguinDeploymentProd
           aws-region: ${{ env.AWS_REGION }}
 
       - name: Configure Variables
@@ -60,5 +59,4 @@ jobs:
         run: python -m pip install -r requirements.txt
 
       - name: Deploy Stack
-        # run: cdk deploy --require-approval never ${{ env.STACK_NAME }}
-        run: make deploy AWS_ACCOUNT=${{ env.AWS_ACCOUNT }} AWS_REGION=${{ env.AWS_REGION }} DISCORD_TOKEN=${{ env.DISCORD_TOKEN }} GUILD_NAME=${{ env.GUILD_NAME }}
+        run: make deploy DISCORD_TOKEN=${{ env.DISCORD_TOKEN }} GUILD_NAME=${{ env.GUILD_NAME }}
