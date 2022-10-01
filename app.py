@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import os
-from dotenv import load_dotenv
+
+# from dotenv import load_dotenv
 
 import aws_cdk as cdk
 
@@ -8,7 +9,7 @@ from penguin_infrastructure.penguin_infrastructure_stack import (
     PenguinInfrastructureStack,
 )
 
-load_dotenv()
+# load_dotenv()
 
 app = cdk.App()
 PenguinInfrastructureStack(
