@@ -44,14 +44,19 @@ class PenguinInfrastructureStack(Stack):
         )
 
     def create_role(self):
-        self.ssm_role = aws_iam.Role(
+        self.bot_role = aws_iam.Role(
             self,
-            config.SSM_ROLE_NAME,
+            config.BOT_ROLE_NAME,
             assumed_by=aws_iam.ServicePrincipal("ec2.amazonaws.com"),
-            role_name=config.SSM_ROLE_NAME,
+            role_name=config.BOT_ROLE_NAME,
         )
-        self.ssm_role.add_managed_policy(
+        self.bot_role.add_managed_policy(
             aws_iam.ManagedPolicy.from_aws_managed_policy_name(config.SSM_POLICY_NAME)
+        )
+        self.bot_role.add_managed_policy(
+            aws_iam.ManagedPolicy.from_aws_managed_policy_name(
+                config.DYNAMODB_POLICY_NAME
+            )
         )
 
     def create_user_data(self):
@@ -61,10 +66,10 @@ class PenguinInfrastructureStack(Stack):
         self.user_data.add_commands("apt install make -y")
         self.user_data.add_commands("apt install python3-pip -y")
         self.user_data.add_commands(
-            "git clone https://github.com/datasciencewithdaniel/penguin.git"
+            "git clone -b develop --single-branch https://github.com/datasciencewithdaniel/penguin.git"
         )
         self.user_data.add_commands(
-            f"cd penguin && sudo git checkout develop && sudo python3 -m pip install -r requirements.txt && sudo python3 -m bot.penguin --bot 1 --discord {self.discord_token} --guild '{self.guild_name}'"
+            f"cd penguin && sudo python3 -m pip install -r requirements.txt && sudo python3 -m bot.penguin --bot 1 --discord {self.discord_token} --guild '{self.guild_name}'"
         )
 
     def create_instance(self):
@@ -83,7 +88,7 @@ class PenguinInfrastructureStack(Stack):
             machine_image=ami_image,
             vpc=self.vpc,
             security_group=self.security_group,
-            role=self.ssm_role,
+            role=self.bot_role,
             user_data=aws_ec2.UserData.custom(self.user_data.render()),
         )
 

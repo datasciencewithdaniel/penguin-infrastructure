@@ -3,8 +3,9 @@ VPC_CIDR = "10.0.0.0/16"
 
 SECURITY_GROUP_NAME = "PenguinSG"
 
-SSM_ROLE_NAME = "SSM_Role"
+BOT_ROLE_NAME = "Bot_Role"
 SSM_POLICY_NAME = "AmazonSSMManagedInstanceCore"
+DYNAMODB_POLICY_NAME = "AmazonDynamoDBFullAccess"
 
 INSTANCE_NAME = "PenguinBotDev"
 INSTANCE_TYPE = "t2.micro"
