@@ -1,4 +1,4 @@
-STACK_NAME=PenguinInfrastructureStack1
+STACK_NAME=PenguinInfrastructureStack
 
 # Synth
 synth: variables
