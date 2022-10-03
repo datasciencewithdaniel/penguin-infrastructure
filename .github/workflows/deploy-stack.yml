@@ -51,6 +51,7 @@ jobs:
         run: |
           export CDK_DEFAULT_ACCOUNT=${{ env.AWS_ACCOUNT }}
           export CDK_DEFAULT_REGION=${{ env.AWS_REGION }}
+          export AWS_DEFAULT_REGION=${{ env.AWS_REGION }}
           export DISCORD_TOKEN=${{ env.DISCORD_TOKEN }}
           export GUILD_NAME=${{ env.GUILD_NAME }}
 

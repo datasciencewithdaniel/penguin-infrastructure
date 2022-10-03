@@ -46,6 +46,7 @@ jobs:
         run: |
           export CDK_DEFAULT_ACCOUNT=${{ env.AWS_ACCOUNT }}
           export CDK_DEFAULT_REGION=${{ env.AWS_REGION }}
+          export AWS_DEFAULT_REGION=${{ env.AWS_REGION }}
 
       - name: Install CDK
         run: npm install -g aws-cdk
