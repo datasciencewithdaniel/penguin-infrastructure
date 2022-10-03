@@ -1,6 +1,7 @@
 from aws_cdk import Stack, aws_ec2, aws_iam, Tags, CfnParameter
 from constructs import Construct
-import os
+
+# import os
 from . import config
 
 
@@ -18,14 +19,12 @@ class PenguinInfrastructureStack(Stack):
         self.add_default_tags()
 
     def parameters(self):
-        self.discord_token = os.getenv("DISCORD_TOKEN")
-        # CfnParameter(
-        #     self, "discord_token", type="String", description="The discord token"
-        # )
-        self.guild_name = os.getenv("GUILD_NAME")
-        # CfnParameter(
-        #     self, "guild_name", type="String", description="The discord guild name"
-        # )
+        self.discord_token = CfnParameter(
+            self, "discord_token", type="String", description="The discord token"
+        )
+        self.guild_name = CfnParameter(
+            self, "guild_name", type="String", description="The discord guild name"
+        )
 
     def create_vpc(self):
         self.vpc = aws_ec2.Vpc(

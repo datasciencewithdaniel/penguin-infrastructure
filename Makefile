@@ -1,4 +1,4 @@
-STACK_NAME=PenguinInfrastructureStack
+STACK_NAME=PenguinInfrastructureStack1
 
 # Synth
 synth: variables
@@ -8,7 +8,9 @@ synth: variables
 ## Deploy
 deploy:
 	cdk deploy ${STACK_NAME} \
-		--require-approval never
+		--require-approval never \
+		--parameters DISCORD_TOKEN=$(DISCORD_TOKEN) \
+		--parameters GUILD_NAME=$(GUILD_NAME)
 .PHONY: deploy
 
 ## Destroy
