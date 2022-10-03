@@ -71,7 +71,7 @@ class PenguinInfrastructureStack(Stack):
             "git clone -b develop --single-branch https://github.com/datasciencewithdaniel/penguin.git"
         )
         self.user_data.add_commands(
-            f"cd penguin && sudo python3 -m pip install -r requirements.txt && sudo python3 -m bot.penguin --bot 1 --discord {self.discord_token} --guild '{self.guild_name}'"
+            f"cd penguin && sudo python3 -m pip install -r requirements.txt && sudo python3 -m bot.penguin --bot 1 --discord {self.discord_token.value_as_string} --guild '{self.guild_name.value_as_string}'"
         )
 
     def create_instance(self):
