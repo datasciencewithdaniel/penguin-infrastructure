@@ -19,10 +19,11 @@ class PenguinInfrastructureStack(Stack):
         self.add_default_tags()
 
     def parameters(self):
-        self.discord_token = os.getenv("DISCORD_TOKEN")  # CfnParameter(
+        self.AWS_DEFAULT_REGION = os.getenv("AWS_DEFAULT_REGION")
+        self.DISCORD_TOKEN = os.getenv("DISCORD_TOKEN")  # CfnParameter(
         #     self, "discord_token", type="String", description="The discord token"
         # )
-        self.guild_name = os.getenv("GUILD_NAME")  # CfnParameter(
+        self.GUILD_NAME = os.getenv("GUILD_NAME")  # CfnParameter(
         #     self, "guild_name", type="String", description="The discord guild name"
         # )
 

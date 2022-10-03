@@ -8,11 +8,12 @@ def create_user_data(self):
     self.user_data.add_commands("apt-get upgrade -y")
     self.user_data.add_commands("apt install make -y")
     self.user_data.add_commands("apt install python3-pip -y")
+    self.user_data.add_commands(f"export AWS_DEFAULT_REGION={self.AWS_DEFAULT_REGION}")
     self.user_data.add_commands(
         "git clone -b develop --single-branch https://github.com/datasciencewithdaniel/penguin.git"
     )
     self.user_data.add_commands(
-        f"cd penguin && sudo python3 -m pip install -r requirements.txt && sudo python3 -m bot.penguin --bot 1 --discord {self.discord_token} --guild '{self.guild_name}'"
+        f"cd penguin && sudo python3 -m pip install -r requirements.txt && sudo python3 -m bot.penguin --bot 1 --discord {self.DISCORD_TOKEN} --guild '{self.GUILD_NAME}'"
     )
 
 
