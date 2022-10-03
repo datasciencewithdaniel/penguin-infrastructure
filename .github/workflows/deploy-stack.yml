@@ -63,5 +63,3 @@ jobs:
 
       - name: Deploy Stack
         run: make deploy
-        # run: cdk deploy --require-approval never ${{ env.STACK_NAME }}
-        # run: make deploy AWS_ACCOUNT=${{ env.AWS_ACCOUNT }} AWS_REGION=${{ env.AWS_REGION }} DISCORD_TOKEN=${{ env.DISCORD_TOKEN }} GUILD_NAME=${{ env.GUILD_NAME }}

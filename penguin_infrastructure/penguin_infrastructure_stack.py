@@ -20,12 +20,12 @@ class PenguinInfrastructureStack(Stack):
 
     def parameters(self):
         self.AWS_DEFAULT_REGION = os.getenv("AWS_DEFAULT_REGION")
-        self.DISCORD_TOKEN = os.getenv("DISCORD_TOKEN")  # CfnParameter(
-        #     self, "discord_token", type="String", description="The discord token"
-        # )
-        self.GUILD_NAME = os.getenv("GUILD_NAME")  # CfnParameter(
-        #     self, "guild_name", type="String", description="The discord guild name"
-        # )
+        self.DISCORD_TOKEN = os.getenv("DISCORD_TOKEN")
+        self.GUILD_NAME = os.getenv("GUILD_NAME")
+
+    def add_default_tags(self):
+        for name, value in config.DEFAULT_TAGS.items():
+            Tags.of(self.scope).add(name, value)
 
     # def create_vpc(self):
     #     self.vpc = aws_ec2.Vpc(
@@ -94,7 +94,3 @@ class PenguinInfrastructureStack(Stack):
     #         role=self.bot_role,
     #         user_data=aws_ec2.UserData.custom(self.user_data.render()),
     #     )
-
-    def add_default_tags(self):
-        for name, value in config.DEFAULT_TAGS.items():
-            Tags.of(self.scope).add(name, value)

@@ -28,7 +28,7 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v3
         with:
-          ref: main # check
+          ref: main
 
       - name: Setup Node
         uses: actions/setup-node@v3
@@ -62,4 +62,4 @@ jobs:
         run: python -m pip install -r requirements.txt
 
       - name: Deploy Stack
-        run: make deploy #DISCORD_TOKEN=${{ env.DISCORD_TOKEN }} GUILD_NAME=${{ env.GUILD_NAME }}
+        run: make deploy
