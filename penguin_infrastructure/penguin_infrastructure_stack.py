@@ -1,4 +1,4 @@
-from aws_cdk import Stack, aws_ec2, aws_iam, Tags
+from aws_cdk import Stack, aws_ec2, aws_iam, Tags, CfnParameter
 from constructs import Construct
 from . import config
 
@@ -8,12 +8,21 @@ class PenguinInfrastructureStack(Stack):
         super().__init__(scope, construct_id, **kwargs)
         self.scope = scope
 
+        self.parameters()
         self.create_vpc()
         self.create_security_group()
         self.create_role()
         self.create_user_data()
         self.create_instance()
         self.add_default_tags()
+
+    def parameters(self):
+        self.discord_token = CfnParameter(
+            self, "discord_token", type="String", description="The discord token"
+        )
+        self.guild_name = CfnParameter(
+            self, "guild_name", type="String", description="The discord guild name"
+        )
 
     def create_vpc(self):
         self.vpc = aws_ec2.Vpc(
@@ -47,17 +56,16 @@ class PenguinInfrastructureStack(Stack):
 
     def create_user_data(self):
         self.user_data = aws_ec2.UserData.for_linux()
-        self.user_data.add_commands("touch test.txt")
         self.user_data.add_commands("apt-get update -y")
         self.user_data.add_commands("apt-get upgrade -y")
-        self.user_data.add_commands("echo 'one' >> test.txt")
         self.user_data.add_commands("apt install make -y")
         self.user_data.add_commands("apt install python3-pip -y")
-        self.user_data.add_commands("echo 'two' >> test.txt")
         self.user_data.add_commands(
             "git clone https://github.com/datasciencewithdaniel/penguin.git"
         )
-        self.user_data.add_commands("echo 'three' >> test.txt")
+        self.user_data.add_commands(
+            f"cd penguin && sudo git checkout develop && sudo python3 -m pip install -r requirements.txt && sudo python3 -m bot.penguin --bot 1 --discord {self.discord_token} --guild '{self.guild_name}'"
+        )
 
     def create_instance(self):
         instance_type = aws_ec2.InstanceType(config.INSTANCE_TYPE)
