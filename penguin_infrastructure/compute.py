@@ -9,10 +9,10 @@ def create_user_data(self):
     self.user_data.add_commands("apt install make -y")
     self.user_data.add_commands("apt install python3-pip -y")
     # self.user_data.add_commands(f"export AWS_DEFAULT_REGION={self.AWS_DEFAULT_REGION}")
-    self.user_data.add_commands(f"mkdir ~/.aws && touch ~/.aws/config")
-    self.user_data.add_commands(
-        f"echo '[default]\nregion = {self.AWS_DEFAULT_REGION}' > ~/.aws/config"
-    )
+    # self.user_data.add_commands(f"mkdir ~/.aws && touch ~/.aws/config")
+    # self.user_data.add_commands(
+    #     f"echo '[default]\nregion = {self.AWS_DEFAULT_REGION}' > ~/.aws/config"
+    # )
     self.user_data.add_commands(
         "git clone -b develop --single-branch https://github.com/datasciencewithdaniel/penguin.git"
     )
