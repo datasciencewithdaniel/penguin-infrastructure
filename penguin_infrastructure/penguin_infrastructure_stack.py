@@ -1,7 +1,7 @@
 from aws_cdk import Stack, aws_ec2, aws_iam, Tags, CfnParameter
 from constructs import Construct
 
-# import os
+import os
 from . import config
 
 
@@ -19,12 +19,12 @@ class PenguinInfrastructureStack(Stack):
         self.add_default_tags()
 
     def parameters(self):
-        self.discord_token = CfnParameter(
-            self, "discord_token", type="String", description="The discord token"
-        )
-        self.guild_name = CfnParameter(
-            self, "guild_name", type="String", description="The discord guild name"
-        )
+        self.discord_token = os.getenv("DISCORD_TOKEN")  # CfnParameter(
+        #     self, "discord_token", type="String", description="The discord token"
+        # )
+        self.guild_name = os.getenv("GUILD_NAME")  # CfnParameter(
+        #     self, "guild_name", type="String", description="The discord guild name"
+        # )
 
     def create_vpc(self):
         self.vpc = aws_ec2.Vpc(
@@ -71,7 +71,7 @@ class PenguinInfrastructureStack(Stack):
             "git clone -b develop --single-branch https://github.com/datasciencewithdaniel/penguin.git"
         )
         self.user_data.add_commands(
-            f"cd penguin && sudo python3 -m pip install -r requirements.txt && sudo python3 -m bot.penguin --bot 1 --discord {self.discord_token.value_as_string} --guild '{self.guild_name.value_as_string}'"
+            f"cd penguin && sudo python3 -m pip install -r requirements.txt && sudo python3 -m bot.penguin --bot 1 --discord {self.discord_token} --guild '{self.guild_name}'"
         )
 
     def create_instance(self):
