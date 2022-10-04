@@ -25,10 +25,10 @@ def create_user_data(self):
     self.user_data.add_commands("chmod +x /usr/local/bin/docker-compose")
     # self.user_data.add_commands(f"export AWS_DEFAULT_REGION={self.AWS_DEFAULT_REGION}")
     self.user_data.add_commands(
-        "git clone -b develop --single-branch https://github.com/datasciencewithdaniel/penguin.git"
+        "git clone -b develop --single-branch https://github.com/datasciencewithdaniel/penguin.git /home/penguin"
     )
     self.user_data.add_commands(
-        f'cd penguin && make run-baby DISCORD_TOKEN={self.DISCORD_TOKEN} GUILD_NAME="{self.GUILD_NAME}" AWS_ACCOUNT_DSWD={self.AWS_ACCOUNT_DSWD}'
+        f'cd /home/penguin && make run-baby DISCORD_TOKEN={self.DISCORD_TOKEN} GUILD_NAME="{self.GUILD_NAME}" AWS_ACCOUNT_DSWD={self.AWS_ACCOUNT_DSWD}'
         # f'cd penguin && sudo python3 -m pip install -r requirements.txt && sudo python3 -m bot.penguin --bot 1 --discord {self.DISCORD_TOKEN} --guild "{self.GUILD_NAME}" --account {self.AWS_ACCOUNT_DSWD}'
     )
 
