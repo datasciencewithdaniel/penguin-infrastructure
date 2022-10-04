@@ -9,6 +9,7 @@ SSM_POLICY_NAME = "AmazonSSMManagedInstanceCore"
 
 INSTANCE_NAME = "PenguinBotDev"
 INSTANCE_TYPE = "t2.micro"
+INSTANCE_AMI = "ami-09a5c873bc79530d9"
 
 DEFAULT_TAGS = {
     "Project": "Penguin",
