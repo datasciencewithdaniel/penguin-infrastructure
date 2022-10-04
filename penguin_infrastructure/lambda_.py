@@ -29,12 +29,12 @@ def create_role(self):
     )
     save_logs_role.add_managed_policy(
         aws_iam.ManagedPolicy.from_aws_managed_policy_name(
-            "AWSLambdaBasicExecutionRole"
+            "service-role/AWSLambdaBasicExecutionRole"
         )
     )
     save_logs_role.add_managed_policy(
         aws_iam.ManagedPolicy.from_aws_managed_policy_name(
-            "AWSLambdaVPCAccessExecutionRole"
+            "service-role/AWSLambdaVPCAccessExecutionRole"
         )
     )
     save_logs_role.add_managed_policy(
