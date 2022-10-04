@@ -17,6 +17,7 @@ def create_user_data(self):
     self.user_data.add_commands(
         'echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null'
     )
+    self.user_data.add_commands("apt-get update -y")
     self.user_data.add_commands("apt install docker-ce docker-ce-cli containerd.io -y")
     self.user_data.add_commands(
         'curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose'
