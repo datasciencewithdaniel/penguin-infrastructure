@@ -17,6 +17,8 @@ class PenguinInfrastructureStack(Stack):
         compute.create_user_data(self)
         compute.create_instance(self)
         lambda_.save_logs(self)
+        lambda_.create_logs_bucket(self)
+        lambda_.create_schedule_trigger(self)
         self.add_default_tags()
 
     def parameters(self):
