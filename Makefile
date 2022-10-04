@@ -8,13 +8,13 @@ synth: variables
 ## Deploy
 deploy:
 	BOT=$(BOT) \
-	cdk deploy ${STACK_NAME} \
+	cdk deploy ${STACK_NAME}${BOT} \
 	--require-approval never
 .PHONY: deploy
 
 ## Destroy
 destroy:
 	BOT=$(BOT) \
-	cdk destroy ${STACK_NAME} \
+	cdk destroy ${STACK_NAME}${BOT} \
 	--force
 .PHONY: destroy
