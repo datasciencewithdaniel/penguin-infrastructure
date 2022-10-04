@@ -2,7 +2,7 @@ STACK_NAME=PenguinInfrastructureStack
 
 # Synth
 synth: variables
-	docker-compose run --rm awscdk sh -c 'cdk synth ${STACK_NAME}'
+	cdk synth ${STACK_NAME}
 .PHONY: synth
 
 ## Deploy
@@ -14,8 +14,7 @@ deploy:
 
 ## Destroy
 destroy:
-	docker-compose run --rm awscdk sh -c '\
-		BOT=$(BOT) \
-		cdk destroy ${STACK_NAME} \
-		--force'
+	BOT=$(BOT) \
+	cdk destroy ${STACK_NAME} \
+	--force
 .PHONY: destroy
