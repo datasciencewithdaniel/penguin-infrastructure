@@ -5,9 +5,9 @@ SECURITY_GROUP_NAME = "PenguinSG"
 
 BOT_ROLE_NAME = "Bot-Role"
 SSM_POLICY_NAME = "AmazonSSMManagedInstanceCore"
-# DYNAMODB_POLICY_NAME = "AmazonDynamoDBFullAccess"
+DSWD_ACCESS_ROLE = "penguin-dynamodb-role"
 
-INSTANCE_NAME = "PenguinBotDev"
+INSTANCE_NAME = "PenguinBot"
 INSTANCE_TYPE = "t2.micro"
 INSTANCE_AMI = "ami-09a5c873bc79530d9"
 

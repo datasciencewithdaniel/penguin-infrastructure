@@ -8,8 +8,8 @@ from . import config, networking, iam, compute
 class PenguinInfrastructureStack(Stack):
     def __init__(self, scope: Construct, construct_id: str, **kwargs) -> None:
         super().__init__(scope, construct_id, **kwargs)
-        self.scope = scope
 
+        self.scope = scope
         self.parameters()
         networking.create_vpc(self)
         networking.create_security_group(self)
@@ -23,6 +23,9 @@ class PenguinInfrastructureStack(Stack):
         self.AWS_ACCOUNT_DSWD = os.getenv("AWS_ACCOUNT_DSWD")
         self.DISCORD_TOKEN = os.getenv("DISCORD_TOKEN")
         self.GUILD_NAME = os.getenv("GUILD_NAME")
+
+        self.BOT = os.getenv("BOT")
+        self.COMMAND = "run" if self.BOT == "0" else "run-baby"
 
     def add_default_tags(self):
         for name, value in config.DEFAULT_TAGS.items():

@@ -21,29 +21,10 @@ def create_role(self):
                 aws_iam.PolicyStatement(
                     actions=["sts:AssumeRole"],
                     resources=[
-                        f"arn:aws:iam::{self.AWS_ACCOUNT_DSWD}:role/penguin-dynamodb-role"
+                        f"arn:aws:iam::{self.AWS_ACCOUNT_DSWD}:role/{config.DSWD_ACCESS_ROLE}"
                     ],
                     effect=aws_iam.Effect.ALLOW,
                 )
             ],
         )
     )
-    # self.bot_role.add_managed_policy(
-    #     aws_iam.ManagedPolicy.from_aws_managed_policy_name(config.DYNAMODB_POLICY_NAME)
-    # )
-    # self.bot_role.attach_inline_policy(
-    #     aws_iam.Policy(
-    #         self,
-    #         "dynamodb-access-policy",
-    #         policy_name="dynamodb-access-policy",
-    #         statements=[
-    #             aws_iam.PolicyStatement(
-    #                 actions=["dynamodb:*"],
-    #                 resources=[
-    #                     f"arn:aws:dynamodb:ap-southeast-2:{self.AWS_ACCOUNT_DSWD}:table/tutoring-base",
-    #                     f"arn:aws:dynamodb:ap-southeast-2:{self.AWS_ACCOUNT_DSWD}:table/tutoring-dev",
-    #                 ],
-    #             )
-    #         ],
-    #     )
-    # )

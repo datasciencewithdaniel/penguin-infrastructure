@@ -1,6 +1,0 @@
-envvars:
-  - name: AWS_ACCOUNT
-    desc: The AWS account number to deploy the stack into
-
-  - name: AWS_REGION
-    desc: The AWS region to deploy the stack into
