@@ -7,10 +7,9 @@ synth: variables
 
 ## Deploy
 deploy:
-	docker-compose run --rm awscdk sh -c '\
-		BOT=$(BOT) \
-		cdk deploy ${STACK_NAME} \
-		--require-approval never'
+	BOT=$(BOT) \
+	cdk deploy ${STACK_NAME} \
+	--require-approval never
 .PHONY: deploy
 
 ## Destroy
