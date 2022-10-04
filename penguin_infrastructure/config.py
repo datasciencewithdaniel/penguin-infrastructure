@@ -11,6 +11,8 @@ INSTANCE_NAME = "PenguinBot"
 INSTANCE_TYPE = "t2.micro"
 INSTANCE_AMI = "ami-09a5c873bc79530d9"
 
+SAVE_LOGS_NAME = "PenguinSaveLogs"
+
 DEFAULT_TAGS = {
     "Project": "Penguin",
     "Organisation": "Data Science with Daniel",

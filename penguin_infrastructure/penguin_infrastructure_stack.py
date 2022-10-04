@@ -2,7 +2,7 @@ from aws_cdk import Stack, Tags
 from constructs import Construct
 
 import os
-from . import config, networking, iam, compute
+from . import config, networking, iam, compute, lambda_
 
 
 class PenguinInfrastructureStack(Stack):
@@ -16,6 +16,7 @@ class PenguinInfrastructureStack(Stack):
         iam.create_role(self)
         compute.create_user_data(self)
         compute.create_instance(self)
+        lambda_.save_logs(self)
         self.add_default_tags()
 
     def parameters(self):
