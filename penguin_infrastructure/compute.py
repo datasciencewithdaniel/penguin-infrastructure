@@ -36,7 +36,7 @@ def create_user_data(self):
 def create_instance(self):
     instance_type = aws_ec2.InstanceType(config.INSTANCE_TYPE)
     ami_image = aws_ec2.MachineImage().generic_linux(
-        {"ap-southeast-2": "ami-09a5c873bc79530d9"}
+        {self.AWS_DEFAULT_REGION: "ami-09a5c873bc79530d9"}
     )
 
     self.instance = aws_ec2.Instance(
