@@ -61,4 +61,4 @@ jobs:
         run: python -m pip install -r requirements.txt
 
       - name: Deploy Stack
-        run: make deploy STACK_NAME=PenguinInfratructureStack BOT=1
+        run: make deploy STACK=PenguinInfratructureStack BOT=1

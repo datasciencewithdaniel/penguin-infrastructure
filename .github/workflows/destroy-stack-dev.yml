@@ -54,4 +54,4 @@ jobs:
         run: python -m pip install -r requirements.txt
 
       - name: Destroy Stack
-        run: make destroy STACK_NAME=PenguinInfratructureStack BOT=1
+        run: make destroy STACK=PenguinInfratructureStack BOT=1
