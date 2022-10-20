@@ -51,7 +51,7 @@ class PenguinEmperorStack(Stack):
                 os.path.join(os.path.dirname(__file__), "lambda_functions")
             ),
             function_name="Emperor-Lambda",
-            description="Lambda function process Discord commands",
+            description="Lambda function to process Discord commands",
             # role=save_logs_role, # FIX
             layers=[self.layer],
             timeout=Duration.seconds(120),
