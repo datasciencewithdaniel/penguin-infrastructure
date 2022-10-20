@@ -65,7 +65,8 @@ class PenguinEmperorStack(Stack):
             "PyNaCl-Layer",
             code=aws_lambda.Code.from_asset(
                 os.path.join(
-                    os.path.dirname(__file__), "lambda_functions/pynacl_layer.zip"
+                    os.path.dirname(__file__),
+                    "lambda_functions/pynacl/pynacl_layer.zip",
                 )
             ),
             compatible_runtimes=[aws_lambda.Runtime.PYTHON_3_9],
