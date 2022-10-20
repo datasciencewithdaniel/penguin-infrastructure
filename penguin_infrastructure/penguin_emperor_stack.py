@@ -10,8 +10,8 @@ class PenguinEmperorStack(Stack):
         super().__init__(scope, construct_id, **kwargs)
         self.scope = scope
 
-        self.emperor_api()
         self.emperor_lambda()
+        self.emperor_api()
 
     def parameters(self):
         self.AWS_DEFAULT_REGION = os.getenv("AWS_DEFAULT_REGION")
