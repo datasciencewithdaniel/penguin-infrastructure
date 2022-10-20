@@ -49,7 +49,7 @@ class PenguinEmperorStack(Stack):
             handler="emperor_lambda.lambda_handler",
             code=aws_lambda.Code.from_asset(
                 os.path.join(
-                    os.path.dirname(__file__), "lambda_functions/emperor_lambda.py"
+                    os.path.dirname(__file__), "lambda_functions/emperor_lambda"
                 )
             ),
             function_name="Emperor-Lambda",
