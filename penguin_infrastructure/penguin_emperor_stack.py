@@ -41,7 +41,7 @@ class PenguinEmperorStack(Stack):
         event.add_method("POST")
 
     def emperor_lambda(self):
-        self.pynacl_layer(self)
+        self.pynacl_layer()
         self._emperor_lambda = aws_lambda.Function(
             self,
             "Emperor-Lambda",
