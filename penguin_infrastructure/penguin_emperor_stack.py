@@ -48,7 +48,9 @@ class PenguinEmperorStack(Stack):
             runtime=aws_lambda.Runtime.PYTHON_3_9,
             handler="emperor_lambda.lambda_handler",
             code=aws_lambda.Code.from_asset(
-                os.path.join(os.path.dirname(__file__), "lambda_functions")
+                os.path.join(
+                    os.path.dirname(__file__), "lambda_functions/emperor_lambda.py"
+                )
             ),
             function_name="Emperor-Lambda",
             description="Lambda function to process Discord commands",
