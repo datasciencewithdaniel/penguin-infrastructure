@@ -62,7 +62,9 @@ class PenguinEmperorStack(Stack):
             self,
             "PyNaCl-Layer",
             code=aws_lambda.Code.from_asset(
-                os.path.join(os.path.dirname(__file__), "lambda_functions/pynacl")
+                os.path.join(
+                    os.path.dirname(__file__), "lambda_functions/pynacl_layer.zip"
+                )
             ),
             compatible_runtimes=[aws_lambda.Runtime.PYTHON_3_9],
             description="PyNaCl Layer for Discord signature verification",
