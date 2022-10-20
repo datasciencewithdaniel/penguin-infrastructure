@@ -10,6 +10,9 @@ class PenguinEmperorStack(Stack):
         super().__init__(scope, construct_id, **kwargs)
         self.scope = scope
 
+        self.emperor_api(self)
+        self.emperor_lambda(self)
+
     def parameters(self):
         self.AWS_DEFAULT_REGION = os.getenv("AWS_DEFAULT_REGION")
         self.AWS_ACCOUNT_DSWD = os.getenv("AWS_ACCOUNT_DSWD")
