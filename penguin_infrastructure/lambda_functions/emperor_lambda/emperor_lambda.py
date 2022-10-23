@@ -56,6 +56,3 @@ def lambda_handler(event, context):
     #     'statusCode': 200,
     #     'body': json.dumps('Hello from the Emperor')
     # }
-
-
-print(lambda_handler(event={"body-json": {"ping": 1}}, context=None))
