@@ -41,11 +41,11 @@ class PenguinEmperorStack(Stack):
         event.add_method("POST")
 
     def emperor_lambda(self):
-        self.pynacl_layer()
+        # self.pynacl_layer()
         self._emperor_lambda = aws_lambda.Function(
             self,
             "Emperor-Lambda",
-            runtime=aws_lambda.Runtime.PYTHON_3_9,
+            runtime=aws_lambda.Runtime.PYTHON_3_8,
             handler="emperor_lambda.lambda_handler",
             code=aws_lambda.Code.from_asset(
                 os.path.join(
@@ -55,20 +55,20 @@ class PenguinEmperorStack(Stack):
             function_name="Emperor-Lambda",
             description="Lambda function to process Discord commands",
             # role=save_logs_role, # FIX
-            layers=[self.layer],
+            # layers=[self.layer],
             timeout=Duration.seconds(120),
         )
 
-    def pynacl_layer(self):
-        self.layer = aws_lambda.LayerVersion(
-            self,
-            "PyNaCl-Layer",
-            code=aws_lambda.Code.from_asset(
-                os.path.join(
-                    os.path.dirname(__file__),
-                    "lambda_functions/pynacl/pynacl_layer.zip",
-                )
-            ),
-            compatible_runtimes=[aws_lambda.Runtime.PYTHON_3_9],
-            description="PyNaCl Layer for Discord signature verification",
-        )
+    # def pynacl_layer(self):
+    #     self.layer = aws_lambda.LayerVersion(
+    #         self,
+    #         "PyNaCl-Layer",
+    #         code=aws_lambda.Code.from_asset(
+    #             os.path.join(
+    #                 os.path.dirname(__file__),
+    #                 "lambda_functions/pynacl/pynacl_layer.zip",
+    #             )
+    #         ),
+    #         compatible_runtimes=[aws_lambda.Runtime.PYTHON_3_9],
+    #         description="PyNaCl Layer for Discord signature verification",
+    #     )
