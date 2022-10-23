@@ -11,7 +11,7 @@ env:
   PYTHON_VERSION: '3.10'
   AWS_ACCOUNT_DSWD: ${{ secrets.AWS_ACCOUNT_DSWD }}
   DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN_BABY }}
-  DISCORD_PENGUIN_PUBLIC_KEY: ${{ secrets.DISCORD_PENGUIN_PUBLIC_KEY }}
+  DISCORD_BABY_PENGUIN_PUBLIC_KEY: ${{ secrets.DISCORD_BABY_PENGUIN_PUBLIC_KEY }}
   GUILD_NAME: ${{ secrets.GUILD_NAME }}
 
 permissions:
@@ -53,7 +53,7 @@ jobs:
           export AWS_DEFAULT_REGION=${{ env.AWS_REGION }}
           export AWS_ACCOUNT_DSWD=${{ env.AWS_ACCOUNT_DSWD }}
           export DISCORD_TOKEN=${{ env.DISCORD_TOKEN }}
-          export DISCORD_PENGUIN_PUBLIC_KEY=${{ env.DISCORD_PENGUIN_PUBLIC_KEY }}
+          export DISCORD_BABY_PENGUIN_PUBLIC_KEY=${{ env.DISCORD_BABY_PENGUIN_PUBLIC_KEY }}
           export GUILD_NAME=${{ env.GUILD_NAME }}
 
       - name: Install CDK

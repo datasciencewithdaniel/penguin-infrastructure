@@ -21,7 +21,9 @@ class PenguinEmperorStack(Stack):
         self.AWS_DEFAULT_REGION = os.getenv("AWS_DEFAULT_REGION")
         self.AWS_ACCOUNT_DSWD = os.getenv("AWS_ACCOUNT_DSWD")
         self.DISCORD_TOKEN = os.getenv("DISCORD_TOKEN")
-        self.DISCORD_PENGUIN_PUBLIC_KEY = os.getenv("DISCORD_PENGUIN_PUBLIC_KEY")
+        self.DISCORD_BABY_PENGUIN_PUBLIC_KEY = os.getenv(
+            "DISCORD_BABY_PENGUIN_PUBLIC_KEY"
+        )
         self.GUILD_NAME = os.getenv("GUILD_NAME")
 
         # self.BOT = os.getenv("BOT")
@@ -36,6 +38,7 @@ class PenguinEmperorStack(Stack):
             self,
             "emperor-api",
             handler=self.emperor_lambda_function,
+            proxy=False,
             default_cors_preflight_options=aws_apigateway.CorsOptions(
                 allow_origins=aws_apigateway.Cors.ALL_ORIGINS,
                 allow_methods=aws_apigateway.Cors.ALL_METHODS,

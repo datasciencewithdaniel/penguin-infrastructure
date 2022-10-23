@@ -4,7 +4,7 @@ import os
 from nacl.signing import VerifyKey
 from nacl.exceptions import BadSignatureError
 
-DISCORD_PENGUIN_PUBLIC_KEY = os.getenv("DISCORD_PENGUIN_PUBLIC_KEY")
+DISCORD_PENGUIN_PUBLIC_KEY = os.getenv("DISCORD_BABY_PENGUIN_PUBLIC_KEY")
 RESPONSE_TYPES = {
     "PONG": 1,
     "ACK_NO_SOURCE": 2,
@@ -20,7 +20,7 @@ def verify_signature(event):
     auth_ts = event["params"]["header"].get("x-signature-timestamp")
 
     message = auth_ts.encode() + raw_body.encode()
-    verify_key = VerifyKey(bytes.fromhex(DISCORD_PENGUIN_PUBLIC_KEY))
+    verify_key = VerifyKey(bytes.fromhex(DISCORD_BABY_PENGUIN_PUBLIC_KEY))
     verify_key.verify(message, bytes.fromhex(auth_sig))  # raises an error if unequal
 
 
