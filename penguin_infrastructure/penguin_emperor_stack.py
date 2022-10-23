@@ -10,6 +10,7 @@ class PenguinEmperorStack(Stack):
         super().__init__(scope, construct_id, **kwargs)
         self.scope = scope
 
+        self.parameters()
         self.emperor_lambda()
         self.emperor_api()
 
