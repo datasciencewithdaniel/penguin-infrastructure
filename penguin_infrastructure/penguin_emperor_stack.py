@@ -14,14 +14,15 @@ class PenguinEmperorStack(Stack):
         self.emperor_api()
 
     def parameters(self):
+        self.AWS_ACCOUNT = os.getenv("CDK_DEFAULT_ACCOUNT")
         self.AWS_DEFAULT_REGION = os.getenv("AWS_DEFAULT_REGION")
         self.AWS_ACCOUNT_DSWD = os.getenv("AWS_ACCOUNT_DSWD")
         self.DISCORD_TOKEN = os.getenv("DISCORD_TOKEN")
         self.DISCORD_PENGUIN_PUBLIC_KEY = os.getenv("DISCORD_PENGUIN_PUBLIC_KEY")
         self.GUILD_NAME = os.getenv("GUILD_NAME")
 
-        self.BOT = os.getenv("BOT")
-        self.COMMAND = "run" if self.BOT == "0" else "run-baby"
+        # self.BOT = os.getenv("BOT")
+        # self.COMMAND = "run" if self.BOT == "0" else "run-baby"
 
     def add_default_tags(self):
         for name, value in config.DEFAULT_TAGS.items():
@@ -41,7 +42,7 @@ class PenguinEmperorStack(Stack):
         event.add_method("POST")
 
     def emperor_lambda(self):
-        # self.pynacl_layer()
+        self.pynacl_layer()
         self._emperor_lambda = aws_lambda.Function(
             self,
             "Emperor-Lambda",
@@ -55,20 +56,13 @@ class PenguinEmperorStack(Stack):
             function_name="Emperor-Lambda",
             description="Lambda function to process Discord commands",
             # role=save_logs_role, # FIX
-            # layers=[self.layer],
+            layers=[self.layer],
             timeout=Duration.seconds(120),
         )
 
-    # def pynacl_layer(self):
-    #     self.layer = aws_lambda.LayerVersion(
-    #         self,
-    #         "PyNaCl-Layer",
-    #         code=aws_lambda.Code.from_asset(
-    #             os.path.join(
-    #                 os.path.dirname(__file__),
-    #                 "lambda_functions/pynacl/pynacl_layer.zip",
-    #             )
-    #         ),
-    #         compatible_runtimes=[aws_lambda.Runtime.PYTHON_3_9],
-    #         description="PyNaCl Layer for Discord signature verification",
-    #     )
+    def pynacl_layer(self, layer_name="Emperor-Layer-EC2", layer_version=1):
+        self.layer = aws_lambda.LayerVersion.from_layer_version_arn(
+            self,
+            "PyNaCl-Layer",
+            layer_version_arn=f"arn:aws:lambda:ap-southeast-2:{self.AWS_ACCOUNT}:layer:{layer_name}:{layer_version}",
+        )
