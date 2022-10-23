@@ -4,7 +4,7 @@ import os
 from nacl.signing import VerifyKey
 from nacl.exceptions import BadSignatureError
 
-DISCORD_PENGUIN_PUBLIC_KEY = os.getenv("DISCORD_BABY_PENGUIN_PUBLIC_KEY")
+DISCORD_BABY_PENGUIN_PUBLIC_KEY = os.getenv("DISCORD_BABY_PENGUIN_PUBLIC_KEY")
 RESPONSE_TYPES = {
     "PONG": 1,
     "ACK_NO_SOURCE": 2,
