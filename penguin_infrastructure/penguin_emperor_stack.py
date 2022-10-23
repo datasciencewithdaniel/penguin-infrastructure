@@ -14,6 +14,8 @@ class PenguinEmperorStack(Stack):
         self.emperor_lambda()
         self.emperor_api()
 
+        self.add_default_tags()
+
     def parameters(self):
         self.AWS_ACCOUNT = os.getenv("CDK_DEFAULT_ACCOUNT")
         self.AWS_DEFAULT_REGION = os.getenv("AWS_DEFAULT_REGION")
@@ -33,18 +35,44 @@ class PenguinEmperorStack(Stack):
         api = aws_apigateway.LambdaRestApi(
             self,
             "emperor-api",
-            handler=self._emperor_lambda,
+            handler=self.emperor_lambda_function,
             default_cors_preflight_options=aws_apigateway.CorsOptions(
                 allow_origins=aws_apigateway.Cors.ALL_ORIGINS,
                 allow_methods=aws_apigateway.Cors.ALL_METHODS,
             ),
         )
+
+        method_response_200 = aws_apigateway.MethodResponse(status_code="200")
+        method_response_401 = aws_apigateway.MethodResponse(status_code="401")
+
         event = api.root.add_resource("event")
-        event.add_method("POST")
+        event.add_method(
+            "POST",
+            method_responses=[method_response_200, method_response_401],
+            # request_models=
+        )
+
+        # response_model = api.add_model("ResponseModel",
+        #     content_type="application/json",
+        #     model_name="ResponseModel",
+        #     schema=aws_apigateway.JsonSchema(
+        #         schema=aws_apigateway.JsonSchemaVersion.DRAFT4,
+        #         title="pollResponse",
+        #         type=aws_apigateway.JsonSchemaType.OBJECT,
+        #         properties={
+        #             "state": aws_apigateway.JsonSchema(type=aws_apigateway.JsonSchemaType.STRING),
+        #             "greeting": aws_apigateway.JsonSchema(type=aws_apigateway.JsonSchemaType.STRING)
+        #         }
+        #     )
+        # )
+
+        integration_response_401 = aws_apigateway.IntegrationResponse(
+            status_code="401", selection_pattern="*[UNAUTHORIZED]*"
+        )
 
     def emperor_lambda(self):
         self.pynacl_layer()
-        self._emperor_lambda = aws_lambda.Function(
+        self.emperor_lambda_function = aws_lambda.Function(
             self,
             "Emperor-Lambda",
             runtime=aws_lambda.Runtime.PYTHON_3_8,
@@ -58,7 +86,7 @@ class PenguinEmperorStack(Stack):
             description="Lambda function to process Discord commands",
             # role=save_logs_role, # FIX
             layers=[self.layer],
-            timeout=Duration.seconds(120),
+            # timeout=Duration.seconds(120),
         )
 
     def pynacl_layer(self, layer_name="Emperor-Layer-EC2", layer_version=1):

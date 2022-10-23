@@ -14,3 +14,4 @@ cdk.out
 */.DS_Store
 
 #penguin_infrastructure/lambda_functions/pynacl/python/*
+.layers.txt
