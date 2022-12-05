@@ -1,4 +1,4 @@
-name: Penguin-Bot-Destruction
+name: Baby-Penguin-Bot-Destruction
 
 on: workflow_dispatch
 
@@ -14,15 +14,15 @@ permissions:
   contents: read
 
 jobs:
-  Penguin-Bot-Destruction:
+  Baby-Penguin-Bot-Destruction:
     runs-on: ubuntu-latest
-    environment: Production
+    environment: Development
 
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
         with:
-          ref: prod
+          ref: main
 
       - name: Setup Node
         uses: actions/setup-node@v3
@@ -38,7 +38,7 @@ jobs:
         uses: aws-actions/configure-aws-credentials@master
         with:
           role-to-assume: arn:aws:iam::${{ env.AWS_ACCOUNT }}:role/${{ env.AWS_CDK_ROLE }}
-          role-session-name: GitHubActionsPenguinDestructionProd
+          role-session-name: GitHubActionsBabyPenguinDestructionProd
           aws-region: ${{ env.AWS_REGION }}
 
       - name: Configure Variables
@@ -54,4 +54,4 @@ jobs:
         run: python -m pip install -r requirements.txt
 
       - name: Destroy Stack
-        run: make destroy STACK=PenguinInfratructureStack BOT=0
+        run: make destroy STACK=PenguinInfratructureStack BOT=1

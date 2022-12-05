@@ -1,27 +1,28 @@
-STACK_NAME=PenguinInfrastructureStack
-
 # Synth
 synth: variables
-	cdk synth ${STACK_NAME}
+	STACK_NAME=$(STACK) \
+	cdk synth ${STACK}
 .PHONY: synth
 
 ## Deploy
 deploy:
-	cdk deploy ${STACK_NAME} \
-		--require-approval never \
-		--parameters DISCORD_TOKEN=$(DISCORD_TOKEN) \
-		--parameters GUILD_NAME="$(GUILD_NAME)"
+	STACK_NAME=$(STACK) \
+	BOT=$(BOT) \
+	cdk deploy ${STACK}${BOT} \
+	--require-approval never
 .PHONY: deploy
 
 ## Destroy
 destroy:
-	cdk destroy ${STACK_NAME} \
-		--force
+	STACK_NAME=$(STACK) \
+	BOT=$(BOT) \
+	cdk destroy ${STACK}${BOT} \
+	--force
 .PHONY: destroy
 
-## Variables
-# variables:
-# 	touch .env
-# 	docker-compose run --rm envvars validate
-# 	docker-compose run --rm envvars envfile --overwrite
-# .PHONY: variables
+## Deploy
+deploy-serverless:
+	STACK_NAME=$(STACK) \
+	cdk deploy ${STACK} \
+	--require-approval never
+.PHONY: deploy-serverless

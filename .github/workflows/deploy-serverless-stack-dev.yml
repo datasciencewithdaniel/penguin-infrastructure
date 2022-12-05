@@ -1,6 +1,7 @@
-name: Penguin-Bot-Destruction
+name: Penguin-Bot-Serverless-Deployment
 
-on: workflow_dispatch
+on:
+  workflow_dispatch:
 
 env:
   AWS_ACCOUNT: ${{ secrets.AWS_ACCOUNT }}
@@ -8,21 +9,25 @@ env:
   AWS_CDK_ROLE: ${{ secrets.AWS_CDK_ROLE }}
   NODE_VERSION: '18'
   PYTHON_VERSION: '3.10'
+  AWS_ACCOUNT_DSWD: ${{ secrets.AWS_ACCOUNT_DSWD }}
+  DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN_BABY }}
+  DISCORD_BABY_PENGUIN_PUBLIC_KEY: ${{ secrets.DISCORD_BABY_PENGUIN_PUBLIC_KEY }}
+  GUILD_NAME: ${{ secrets.GUILD_NAME }}
 
 permissions:
   id-token: write
   contents: read
 
 jobs:
-  Penguin-Bot-Destruction:
+  Baby-Penguin-Bot-Deployment:
     runs-on: ubuntu-latest
-    environment: Production
+    environment: Development
 
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
         with:
-          ref: prod
+          ref: main
 
       - name: Setup Node
         uses: actions/setup-node@v3
@@ -38,7 +43,7 @@ jobs:
         uses: aws-actions/configure-aws-credentials@master
         with:
           role-to-assume: arn:aws:iam::${{ env.AWS_ACCOUNT }}:role/${{ env.AWS_CDK_ROLE }}
-          role-session-name: GitHubActionsPenguinDestructionProd
+          role-session-name: GitHubActionsBabyPenguinDeploymentProd
           aws-region: ${{ env.AWS_REGION }}
 
       - name: Configure Variables
@@ -46,6 +51,10 @@ jobs:
           export CDK_DEFAULT_ACCOUNT=${{ env.AWS_ACCOUNT }}
           export CDK_DEFAULT_REGION=${{ env.AWS_REGION }}
           export AWS_DEFAULT_REGION=${{ env.AWS_REGION }}
+          export AWS_ACCOUNT_DSWD=${{ env.AWS_ACCOUNT_DSWD }}
+          export DISCORD_TOKEN=${{ env.DISCORD_TOKEN }}
+          export DISCORD_BABY_PENGUIN_PUBLIC_KEY=${{ env.DISCORD_BABY_PENGUIN_PUBLIC_KEY }}
+          export GUILD_NAME=${{ env.GUILD_NAME }}
 
       - name: Install CDK
         run: npm install -g aws-cdk
@@ -53,5 +62,5 @@ jobs:
       - name: Install Dependencies
         run: python -m pip install -r requirements.txt
 
-      - name: Destroy Stack
-        run: make destroy STACK=PenguinInfratructureStack BOT=0
+      - name: Deploy Stack
+        run: make deploy-serverless STACK=PenguinEmperorStack

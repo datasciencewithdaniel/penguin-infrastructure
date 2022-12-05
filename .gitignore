@@ -10,3 +10,8 @@ __pycache__
 cdk.out
 
 .env
+.DS_Store
+*/.DS_Store
+
+#penguin_infrastructure/lambda_functions/pynacl/python/*
+.layers.txt

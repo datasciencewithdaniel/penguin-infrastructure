@@ -1,32 +1,28 @@
 #!/usr/bin/env python3
 import os
-
-# from dotenv import load_dotenv
-
 import aws_cdk as cdk
 
 from penguin_infrastructure.penguin_infrastructure_stack import (
     PenguinInfrastructureStack,
 )
 
-# load_dotenv()
+# from penguin_infrastructure.penguin_emperor_stack import PenguinEmperorStack
 
 app = cdk.App()
 PenguinInfrastructureStack(
     app,
-    "PenguinInfrastructureStack",
-    # If you don't specify 'env', this stack will be environment-agnostic.
-    # Account/Region-dependent features and context lookups will not work,
-    # but a single synthesized template can be deployed anywhere.
-    # Uncomment the next line to specialize this stack for the AWS Account
-    # and Region that are implied by the current CLI configuration.
+    f"PenguinInfrastructureStack{os.getenv('BOT')}",
     env=cdk.Environment(
-        account=os.getenv("CDK_DEFAULT_ACCOUNT"), region=os.getenv("CDK_DEFAULT_REGION")
+        account=os.getenv("CDK_DEFAULT_ACCOUNT"), region=os.getenv("ap-southeast-2")
     ),
-    # Uncomment the next line if you know exactly what Account and Region you
-    # want to deploy the stack to. */
-    # env=cdk.Environment(account="162455609113", region="ap-southeast-2"),
-    # For more information, see https://docs.aws.amazon.com/cdk/latest/guide/environments.html
 )
+
+# PenguinEmperorStack(
+#     app,
+#     f"PenguinEmperorStack",
+#     env=cdk.Environment(
+#         account=os.getenv("CDK_DEFAULT_ACCOUNT"), region=os.getenv("CDK_DEFAULT_REGION")
+#     ),
+# )
 
 app.synth()

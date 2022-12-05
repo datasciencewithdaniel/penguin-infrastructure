@@ -2,18 +2,14 @@ name: Penguin-Bot-Deployment
 
 on:
   workflow_dispatch:
-  push:
-    branches: [prod]
 
 env:
-  STACK_NAME: 'PenguinInfrastructureStack'
   AWS_ACCOUNT: ${{ secrets.AWS_ACCOUNT }}
   AWS_REGION: 'ap-southeast-2'
   AWS_CDK_ROLE: ${{ secrets.AWS_CDK_ROLE }}
   NODE_VERSION: '18'
   PYTHON_VERSION: '3.10'
-  DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
-  DISCORD_TOKEN_BABY: ${{ secrets.DISCORD_TOKEN_BABY }}
+  AWS_ACCOUNT_DSWD: ${{ secrets.AWS_ACCOUNT_DSWD }}
   GUILD_NAME: ${{ secrets.GUILD_NAME }}
 
 permissions:
@@ -52,6 +48,9 @@ jobs:
         run: |
           export CDK_DEFAULT_ACCOUNT=${{ env.AWS_ACCOUNT }}
           export CDK_DEFAULT_REGION=${{ env.AWS_REGION }}
+          export AWS_DEFAULT_REGION=${{ env.AWS_REGION }}
+          export AWS_ACCOUNT_DSWD=${{ env.AWS_ACCOUNT_DSWD }}
+          export GUILD_NAME=${{ env.GUILD_NAME }}
 
       - name: Install CDK
         run: npm install -g aws-cdk
@@ -60,46 +59,4 @@ jobs:
         run: python -m pip install -r requirements.txt
 
       - name: Deploy Stack
-        # run: cdk deploy --require-approval never ${{ env.STACK_NAME }}
-        run: make deploy AWS_ACCOUNT=${{ env.AWS_ACCOUNT }} AWS_REGION=${{ env.AWS_REGION }} DISCORD_TOKEN=${{ env.DISCORD_TOKEN }} GUILD_NAME=${{ env.GUILD_NAME }}
-
-  Baby-Penguin-Bot-Deployment:
-    runs-on: ubuntu-latest
-    environment: Development
-
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v3
-        with:
-          ref: prod # check
-
-      - name: Setup Node
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-
-      - name: Setup Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: ${{ env.PYTHON_VERSION }}
-
-      - name: Configure aws credentials
-        uses: aws-actions/configure-aws-credentials@master
-        with:
-          role-to-assume: arn:aws:iam::${{ env.AWS_ACCOUNT }}:role/${{ env.AWS_CDK_ROLE }}
-          role-session-name: GitHubActionsBabyPenguinDeploymentProd
-          aws-region: ${{ env.AWS_REGION }}
-
-      - name: Configure Variables
-        run: |
-          export CDK_DEFAULT_ACCOUNT=${{ env.AWS_ACCOUNT }}
-          export CDK_DEFAULT_REGION=${{ env.AWS_REGION }}
-
-      - name: Install CDK
-        run: npm install -g aws-cdk
-
-      - name: Install Dependencies
-        run: python -m pip install -r requirements.txt
-
-      - name: Deploy Stack
-        run: make deploy DISCORD_TOKEN=${{ env.DISCORD_TOKEN_BABY }} GUILD_NAME=${{ env.GUILD_NAME }}
+        run: make deploy STACK=PenguinInfratructureStack BOT=0
