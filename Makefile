@@ -8,7 +8,7 @@ synth: variables
 deploy:
 	STACK_NAME=$(STACK) \
 	BOT=$(BOT) \
-	cdk deploy ${STACK}${BOT} \
+	cdk deploy ${STACK} \
 	--require-approval never
 .PHONY: deploy
 
