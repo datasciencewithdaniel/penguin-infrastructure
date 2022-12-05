@@ -11,7 +11,7 @@ from penguin_infrastructure.penguin_infrastructure_stack import (
 app = cdk.App()
 PenguinInfrastructureStack(
     app,
-    f"PenguinInfrastructureStack{os.getenv('BOT')}",
+    f"PenguinInfrastructureStack0",  # {os.getenv('BOT')}",
     env=cdk.Environment(
         account=os.getenv("CDK_DEFAULT_ACCOUNT"), region=os.getenv("ap-southeast-2")
     ),
