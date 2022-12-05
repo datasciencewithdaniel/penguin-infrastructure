@@ -14,7 +14,7 @@ class PenguinInfrastructureStack(Stack):
         networking.create_vpc(self)
         networking.create_security_group(self)
         iam.create_role(self)
-        compute.create_user_data(self)
+        # compute.create_user_data(self)
         compute.create_instance(self)
         # lambda_.save_logs(self)
         # lambda_.create_logs_bucket(self)

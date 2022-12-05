@@ -4,7 +4,7 @@ from . import config
 
 def create_vpc(self):
     self.vpc = aws_ec2.Vpc(
-        self, config.VPC_NAME, cidr=config.VPC_CIDR, vpc_name=config.VPC_NAME
+        self, config.VPC_NAME, cidr=config.VPC_CIDR, vpc_name=config.VPC_NAME, max_azs=1
     )
 
 
