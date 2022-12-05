@@ -45,6 +45,6 @@ def create_instance(self):
         machine_image=ami_image,
         vpc=self.vpc,
         security_group=self.security_group,
-        role=self.bot_role,
+        role=self.bot_role
         # user_data=aws_ec2.UserData.custom(self.user_data.render()),
     )
