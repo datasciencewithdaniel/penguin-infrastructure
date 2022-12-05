@@ -10,7 +10,6 @@ env:
   NODE_VERSION: '18'
   PYTHON_VERSION: '3.10'
   AWS_ACCOUNT_DSWD: ${{ secrets.AWS_ACCOUNT_DSWD }}
-  DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
   GUILD_NAME: ${{ secrets.GUILD_NAME }}
 
 permissions:
@@ -51,7 +50,6 @@ jobs:
           export CDK_DEFAULT_REGION=${{ env.AWS_REGION }}
           export AWS_DEFAULT_REGION=${{ env.AWS_REGION }}
           export AWS_ACCOUNT_DSWD=${{ env.AWS_ACCOUNT_DSWD }}
-          export DISCORD_TOKEN=${{ env.DISCORD_TOKEN }}
           export GUILD_NAME=${{ env.GUILD_NAME }}
 
       - name: Install CDK

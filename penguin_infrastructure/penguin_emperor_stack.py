@@ -20,7 +20,7 @@ class PenguinEmperorStack(Stack):
         self.AWS_ACCOUNT = os.getenv("CDK_DEFAULT_ACCOUNT")
         self.AWS_DEFAULT_REGION = os.getenv("AWS_DEFAULT_REGION")
         self.AWS_ACCOUNT_DSWD = os.getenv("AWS_ACCOUNT_DSWD")
-        self.DISCORD_TOKEN = os.getenv("DISCORD_TOKEN")
+        # self.DISCORD_TOKEN = os.getenv("DISCORD_TOKEN")
         self.DISCORD_BABY_PENGUIN_PUBLIC_KEY = os.getenv(
             "DISCORD_BABY_PENGUIN_PUBLIC_KEY"
         )
